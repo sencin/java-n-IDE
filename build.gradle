@@ -27,7 +27,7 @@ ext {
     compileSdkVersion = 26
     buildToolsVersion = '27.0.1'
     targetSdkVersion = 26
-    minSdkVersion = 14
+    minSdkVersion = 19
     googleServiceVersion = "11.6.2"
     supportLibVersion = "27.0.2"
 }
