@@ -103,7 +103,7 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.amulyakhare:TextDrawable:3fa69daf3b'
-    compile 'com.github.MiguelCatalan:MaterialSearchView:1.2.0'
+    compile 'com.github.MiguelCatalan:MaterialSearchView:v1.2.0'
     compile 'com.sothree.slidinguppanel:library:3.3.1'
 }
 
