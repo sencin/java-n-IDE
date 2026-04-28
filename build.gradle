@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        google()
         jcenter()
         maven {
             url 'https://maven.fabric.io/public'
@@ -15,6 +16,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven { url 'https://dl.bintray.com/ppartisan/maven/' }
         maven { url "https://clojars.org/repo/" }
