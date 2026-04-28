@@ -54,7 +54,7 @@ import com.jecelyin.common.task.TaskResult;
 import com.jecelyin.common.utils.L;
 import com.jecelyin.common.utils.UIUtils;
 import com.jecelyin.editor.v2.Pref;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -129,7 +129,14 @@ public class FileListPagerFragment extends JecFragment implements SwipeRefreshLa
         binding.explorerSwipeRefreshLayout.setOnRefreshListener(this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getContext()).margin(getResources().getDimensionPixelSize(R.dimen.file_list_item_divider_left_margin), 0).build());
+     
+
+RecyclerViewDivider.with(getContext())
+    .marginLeft(getResources().getDimensionPixelSize(R.dimen.file_list_item_divider_left_margin))
+    .build()
+    .addTo(binding.recyclerView);
+
+        
         binding.explorerSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
