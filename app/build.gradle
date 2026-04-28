@@ -99,7 +99,7 @@ dependencies {
         transitive = true
     }
 
-    compile 'com.github.kobakei:RateThisApp:1.1.3'
+    compile 'com.github.kobakei:Android-RateThisApp:1.2.0'
     compile 'commons-io:commons-io:2.4'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.github.amulyakhare:TextDrawable:3fa69daf3b'
