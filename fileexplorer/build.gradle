@@ -26,5 +26,5 @@ dependencies {
     compile project(':common')
     compile project(':styles')
     compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'com.github.lh601528155:RecyclerView-FlexibleDivider:1.4.0'
+    compile 'com.github.SMeisS:RecyclerView-FlexibleDivider:1.4.0'
 }
