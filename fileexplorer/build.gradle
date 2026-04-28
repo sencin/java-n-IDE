@@ -26,5 +26,5 @@ dependencies {
     compile project(':common')
     compile project(':styles')
     compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'com.github.Fondesa:recycler-view-divider:2.0.1'
+    compile 'com.github.fondesa:recycler-view-divider:2.0.1'
 }
