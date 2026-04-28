@@ -1,4 +1,4 @@
-name: Build APK
+name: Build Legacy APK
 
 on:
   push:
@@ -15,14 +15,27 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up JDK 8
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17' # Updated to 17 as it's the modern standard for recent AGP versions
+          java-version: '8'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install Android SDK 27 and Build Tools
+        run: |
+          sdkmanager --install "platforms;android-27" "build-tools;27.0.1"
+
+      - name: Download and Install NDK r12b
+        run: |
+          wget https://dl.google.com/android/repository/android-ndk-r12b-linux-x86_64.zip
+          unzip -q android-ndk-r12b-linux-x86_64.zip
+          echo "ANDROID_NDK_HOME=$(pwd)/android-ndk-r12b" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$(pwd)/android-ndk-r12b" >> $GITHUB_ENV
+
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          echo "ndk.dir=$PWD/android-ndk-r12b" >> local.properties
 
       - name: Make gradlew executable
         run: chmod +x gradlew
