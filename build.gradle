@@ -19,13 +19,12 @@ allprojects {
         google()
         mavenCentral()
        
-        maven { url "https://jitpack.io" }
-        
-    
+        maven { url "https://jitpack.io" } 
+        // This is a specific mirror for old Bintray/JCenter packages
+        maven { url "https://rb-public.jfrog.io/artifactory/maven/" }
+
         maven { url 'https://dl.bintray.com/ppartisan/maven/' }
         maven { url "https://clojars.org/repo/" }
-
-        jcenter() 
     }
 }
 
