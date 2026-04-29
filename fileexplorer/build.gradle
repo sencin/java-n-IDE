@@ -32,5 +32,4 @@ dependencies {
     compile project(':common')
     compile project(':styles')
     compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'com.github.yqritc:RecyclerView-FlexibleDivider:74f19b08f9'
 }
