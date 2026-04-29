@@ -21,6 +21,12 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+    google()
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':common')
