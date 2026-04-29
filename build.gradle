@@ -1,10 +1,11 @@
 // Top-level build file
 buildscript {
     repositories {
+        maven { url "https://jitpack.io" } 
         google()
         mavenCentral() 
  
-        maven { url 'https://maven.fabric.io/public' }
+        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -15,11 +16,12 @@ buildscript {
 
 allprojects {
     repositories {
+        maven { url "https://jitpack.io" } 
         google()
         mavenCentral()
         
         // Add this specific mirror for older libraries
-        maven { url "https://jitpack.io" } 
+        
     }
 }
 
