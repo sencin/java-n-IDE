@@ -11,25 +11,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ANDROID_NDK_VERSION: r12b
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      # Java 17 ONLY for sdkmanager
-      - name: Set up JDK 17
+      # ----------------------------
+      # Set up Android environment
+      # ----------------------------
+      - name: Set Android Home
+        run: echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+
+      - name: Setup JDK 17 (SDK tools)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Install required system packages
+      - name: Install system dependencies
         run: |
           sudo dpkg --add-architecture i386
           sudo apt-get update
-
           sudo apt-get install -y \
             libc6:i386 \
             libstdc++6:i386 \
@@ -38,23 +39,34 @@ jobs:
             unzip \
             wget
 
-      - name: Install Android SDK 27
+      # ----------------------------
+      # Android SDK setup
+      # ----------------------------
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK 27 + Build Tools
         run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-            --sdk_root=$ANDROID_HOME \
+          yes | sdkmanager \
             "platforms;android-27" \
             "build-tools;27.0.1"
 
+      # ----------------------------
+      # NDK r12b setup (stable path)
+      # ----------------------------
       - name: Download Android NDK r12b
         run: |
           wget https://dl.google.com/android/repository/android-ndk-r12b-linux-x86_64.zip -O ndk.zip
           unzip -q ndk.zip
+          mv android-ndk-r12b $HOME/android-ndk-r12b
 
-          echo "ANDROID_NDK_HOME=$PWD/android-ndk-r12b" >> $GITHUB_ENV
-          echo "ANDROID_NDK_ROOT=$PWD/android-ndk-r12b" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=$HOME/android-ndk-r12b" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$HOME/android-ndk-r12b" >> $GITHUB_ENV
 
-      # Switch to Java 8 for old Gradle/AGP
-      - name: Set up JDK 8
+      # ----------------------------
+      # Switch to Java 8 for build
+      # ----------------------------
+      - name: Set up JDK 8 (build)
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -63,25 +75,25 @@ jobs:
       - name: Create local.properties
         run: |
           echo "sdk.dir=$ANDROID_HOME" > local.properties
-          echo "ndk.dir=$PWD/android-ndk-r12b" >> local.properties
+          echo "ndk.dir=$HOME/android-ndk-r12b" >> local.properties
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
-      - name: Clean Gradle cache
-        run: |
-          rm -rf ~/.gradle/caches/
-          rm -rf ~/.gradle/daemon/
-
+      # ----------------------------
+      # Build
+      # ----------------------------
       - name: Build Debug APK
         run: |
-          ./gradlew \
-            clean \
-            assembleDebug \
+          ./gradlew clean assembleDebug \
             --stacktrace \
             --info \
+            --refresh-dependencies \
             -Dcom.android.repository.NoVersionCheck=true
 
+      # ----------------------------
+      # Upload artifact
+      # ----------------------------
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
